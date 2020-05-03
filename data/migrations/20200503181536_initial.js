@@ -1,0 +1,62 @@
+
+exports.up = async function(knex) {
+    await knex.schema.createTable('projects', (table) => {
+        table.increments('id', 256)
+        table.string('project_name')
+             .notNullable()
+             .unique()
+        table.string('description')
+             .notNullable()
+        table.boolean('completed')          
+             .notNullable()
+             .toDefaultTo(false)
+    })
+    await knex.schema.createTable('tasks', (table) => {
+        table.increments('id')
+        table.string('task_name')
+             .notNullable()
+             .unique()
+        table.string('description')
+             .notNullable()
+        table.string('notes', 128)
+             .notNullable() 
+        table.boolean('completed')
+             .notNullable()
+             .toDefaultTo(false)
+             .date('on_date').toDefaultTo(knex.raw('current_timestamp')) 
+        table.integer('projects_id')
+             .unsigned()
+             .notNullable()
+             .references('projects')
+             .inTable('projects')  
+             .onUpdate('CASCADE')
+             .onDelete('CASCADE')
+    })
+    await knex.schema.createTable('resources', (table) => {
+        table.increments('id')
+        table.string('resources_name', 128)
+             .notNullable()
+             .unique()
+    })
+   //intermediary table to join projects & resources
+   await knex.schema.createTable('projects_resources', (table) => {
+       table.integer('projects_id')
+            .references('id')
+            .inTable('projects')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
+        table.integer('resources_id')
+            .references('id')     
+            .inTable('resources')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
+        table.primary(['projects_id',  'resources_id'])    
+     })   
+};
+
+exports.down = async function(knex) {
+    await knex.schema.dropIfTableExists('projects_resources')
+    await knex.schema.dropIfTableExists('resources')
+    await knex.schema.dropIfTableExists('tasks')
+    await knex.schema.dropIfTableExists('projects')
+};
