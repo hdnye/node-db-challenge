@@ -29,6 +29,22 @@ router.get('/:id', (req, res) => {
             }
         })
 })
+
+router.get('/:id/tasks', (req, res) => {
+    const { id } = req.params
+
+    Projects.findTasks(id)
+        .then(tasks => {
+            if(tasks.length) {
+                res.json(tasks)
+            } else {
+                res.status(404).json({
+                    message: 'Could not find tasks for this project'
+                })
+            }
+        })
+})
+
 router.post('/', (req, res) => {
        const projectData = req.body
 

@@ -1,13 +1,11 @@
 
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
+exports.seed = async function(knex) {
+  await knex('tasks').insert([
+    { name: 'Sweep', description: 'Using a broom, sweep floor', notes: '', projects_id: '1' },
+    { name: 'Recylce',description: 'Take items to thrift shop', notes: '', projects_id: '1'},
+    { name: 'Secure Dogs', description: 'Get leashes', notes: '', projects_id: '2' },
+    { name: 'Get Treats', description: 'Keep treats close by', notes: '', projects_id: '3' },
+    { name: 'Storage', description: 'Put winter clothes in storage', notes: '', projects_id: '3' },
+    { name: 'Donate', description: 'Remove worn out clothes', notes: '', projects_id: '3' },
+  ]);  
 };

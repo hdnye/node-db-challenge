@@ -13,7 +13,7 @@ exports.up = async function(knex) {
     })
     await knex.schema.createTable('tasks', (table) => {
         table.increments('id')
-        table.string('task_name')
+        table.string('name')
              .notNullable()
              .unique()
         table.string('description')
@@ -33,7 +33,7 @@ exports.up = async function(knex) {
     })
     await knex.schema.createTable('resources', (table) => {
         table.increments('id')
-        table.string('resources_name', 128)
+        table.string('name', 128)
              .notNullable()
              .unique()
     })
