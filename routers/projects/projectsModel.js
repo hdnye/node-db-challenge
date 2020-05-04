@@ -1,6 +1,6 @@
 const db = require('../../data/config');
 
-module.export = {
+module.exports = {
     find,
     findById
 };
