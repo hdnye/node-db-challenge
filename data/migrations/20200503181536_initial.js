@@ -27,7 +27,7 @@ exports.up = async function(knex) {
              .unsigned()
              .notNullable()
              .references('id')
-             .inTable('projects')  
+             .inTable('projects')
              .onUpdate('CASCADE')
              .onDelete('CASCADE')
     })
@@ -36,6 +36,13 @@ exports.up = async function(knex) {
         table.string('name', 128)
              .notNullable()
              .unique()
+        table.integer('projects_id')
+             .unsigned()
+             .notNullable()
+             .references('id')
+             .inTable('projects')
+             .onUpdate('CASCADE')
+             .onDelete('CASCADE')
     })
    //intermediary table to join projects & resources
    await knex.schema.createTable('projects_resources', (table) => {

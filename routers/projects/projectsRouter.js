@@ -1,6 +1,6 @@
 const express = require('express');
 const Projects = require('./projectsModel');
-
+const db = require('../../data/config');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -15,35 +15,30 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
+// router.get('/:id', (req, res) => {
+//     const { id } = req.params;
 
-    Projects.find(id)
-        .then(project => {
-            if (project) {
-                res.json(project)
-            } else {
-                res.status(404).json({
-                    message: 'Unable to get project'
-                })
-            }
-        })
+//      Projects.findById(id)
+//         .then(project => {
+//             res.json(project)
+//          })       
+//         .catch(err => {
+//             console.log(err)
+//             next(err)
+//        })
+// })
+
+router.get('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const project = await db('projects').where({ id }).first()
+        res.json(project)
+    } catch(err) {
+        console.log(err)
+        next(err)
+    }
 })
 
-router.get('/:id/tasks', (req, res) => {
-    const { id } = req.params
-
-    Projects.findTasks(id)
-        .then(tasks => {
-            if(tasks.length) {
-                res.json(tasks)
-            } else {
-                res.status(404).json({
-                    message: 'Could not find tasks for this project'
-                })
-            }
-        })
-})
 
 router.post('/', (req, res) => {
        const projectData = req.body

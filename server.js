@@ -3,7 +3,7 @@ const router = express.Router()
 const cors = require('cors');
 const helmet = require('helmet');
 const projectsRouter = require('./routers/projects/projectsRouter')
-
+const tasksRouter = require('./routers/tasks/tasksRouter')
 const server = express();
 
 //import Middleware
@@ -13,10 +13,7 @@ server.use(helmet());
 
 //import routes
 server.use('/projects', projectsRouter);
-router.get('/', (req, res) => {
-  console.log('here')
-  res.send('here')
-})
+server.use('/tasks', tasksRouter);
 
 //error Middlware
 server.use((err, req, res, next) => {
