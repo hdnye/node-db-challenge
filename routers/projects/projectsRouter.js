@@ -24,11 +24,25 @@ router.get('/:id', (req, res) => {
                 res.json(project)
             } else {
                 res.status(404).json({
-                    message: 'Unable to get projects'
+                    message: 'Unable to get project'
                 })
             }
         })
 })
+router.post('/', (req, res) => {
+       const projectData = req.body
+
+        Projects.add(projectData)
+          .then(project  => {
+              res.status(201).json(project)
+          })
+            .catch(err => {
+                res.status(404).json({
+                    message: 'Unable to add project'
+          })   
+     })
+   })    
+
 
 module.exports = router;
 

@@ -2,7 +2,8 @@ const db = require('../../data/config');
 
 module.exports = {
     find,
-    findById
+    findById,
+    add
 };
 
 function find() {
@@ -17,3 +18,12 @@ function findById() {
             return record !== undefined ? record : null
         })
 };
+
+function add(project) {
+    return db('projects')
+        .insert(project)
+        .then((id) => {
+            return findById(id[0])
+        })
+        
+}
