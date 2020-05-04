@@ -25,5 +25,4 @@ function add(project) {
         .then((id) => {
             return findById(id[0])
         })
-        
 }

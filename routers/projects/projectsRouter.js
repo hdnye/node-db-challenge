@@ -39,6 +39,17 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+router.get('/:id',async (req, res, next) => {
+    try {
+        const task = await ('projects as p')
+            .leftJoin('tasks as t', 'p.id', 'p.name', 'p.description')
+            .select('t.id', 't.name', 'p.name as projects_name')
+            res.json(task)
+    } catch(err) {
+        console.log(err)
+        next(err)
+    }
+})
 
 router.post('/', (req, res) => {
        const projectData = req.body
