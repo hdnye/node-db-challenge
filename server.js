@@ -1,8 +1,9 @@
 const express = require('express');
+const server = express();
 const cors = require('cors');
 const helmet = require('helmet');
 const projectsRouter = require('./routers/projects/projectsRouter')
-const server = express();
+
 
 //import Middleware
 server.use(express.json());
