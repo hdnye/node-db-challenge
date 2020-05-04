@@ -1,33 +1,26 @@
 const express = require('express');
 const Tasks = require('./tasksModel');
-
+const db = require('../../data/config');
 const router = express.Router();
 
 
-router.get('/:id', (req, res) => {
-    const { id } = req.params.id
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const task = await db('tasks').where({ id }).first()
+        res.json(task)        
+      } catch(err) {
+          console.log(err)
+          next(err)
+        }
+    });
 
-    Tasks.findTasks(id)
-        .then(task => {
-            res.json(task)
-        })
-        .catch(err => {
-            res.status(500).json({ 
-                message: 'Failed to get tasks' });
-        });
+router.put('/:id', async (req, res, next) => {
+  try {
 
-})
-
-router.put('/:id', (req, res) => {
-     Tasks.insert(req.body)
-        .then(task => {
-            res.status(202).json(task)
-        })
-        .catch(err => {
-            res.status(500).json({
-                message: 'Failed to update'
-            })
-        })
+  } catch(err) {
+      next(err)
+  }
 
 })
 

@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const projectsRouter = require('./routers/projects/projectsRouter')
 const tasksRouter = require('./routers/tasks/tasksRouter')
+const resourcesRouter = require('./routers/resources/resourcesRouter')
 const server = express();
 
 //import Middleware
@@ -14,6 +15,7 @@ server.use(helmet());
 //import routes
 server.use('/projects', projectsRouter);
 server.use('/tasks', tasksRouter);
+server.use('/resources', resourcesRouter);
 
 //error Middlware
 server.use((err, req, res, next) => {
